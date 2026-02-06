@@ -1,3 +1,3 @@
-## v0.1.1 - 2026-02-06
+## v0.1.2 - 2026-02-06
 
-- Fix CI export crash by running Godot under Xvfb
+- Fix CI export by forcing X11+opengl3

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Neon Survivor"
-config/version="v0.1.1"
+config/version="v0.1.2"
 run/main_scene="res://src/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
