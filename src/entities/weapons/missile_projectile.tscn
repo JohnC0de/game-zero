@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://missile_proj_001"]
+
+[ext_resource type="Script" path="res://src/entities/weapons/missile_projectile.gd" id="1_missile"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_missile"]
+radius = 6.0
+
+[node name="MissileProjectile" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_missile")
+speed = 350.0
+turn_rate = 5.0
+lifetime = 4.0
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(1, 0.6, 0.2, 1)
+polygon = PackedVector2Array(0, -8, -4, 6, 0, 4, 4, 6)
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_missile")

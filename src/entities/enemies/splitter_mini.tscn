@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://splitter_mini_001"]
+
+[ext_resource type="Script" path="res://src/entities/enemies/splitter_mini.gd" id="1_mini"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hitbox"]
+radius = 6.0
+
+[node name="SplitterMini" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_mini")
+max_hp = 5
+move_speed = 150.0
+contact_damage = 5
+xp_value = 1
+enemy_color = Color(0.8, 0.5, 1, 1)
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(0.8, 0.5, 1, 1)
+polygon = PackedVector2Array(0, -8, -6, 4, 6, 4)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 1
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_hitbox")

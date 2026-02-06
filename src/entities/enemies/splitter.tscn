@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://splitter_enemy_001"]
+
+[ext_resource type="Script" path="res://src/entities/enemies/splitter.gd" id="1_splitter"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hitbox"]
+radius = 14.0
+
+[node name="Splitter" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_splitter")
+max_hp = 20
+move_speed = 80.0
+contact_damage = 12
+xp_value = 3
+enemy_color = Color(0.7, 0.3, 1, 1)
+split_count = 2
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(0.7, 0.3, 1, 1)
+polygon = PackedVector2Array(0, -16, -14, 0, -8, 8, 0, 4, 8, 8, 14, 0)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 1
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_hitbox")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://blaster_proj_001"]
+
+[ext_resource type="Script" path="res://src/entities/weapons/blaster_projectile.gd" id="1_proj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_proj"]
+radius = 5.0
+
+[node name="BlasterProjectile" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_proj")
+speed = 600.0
+lifetime = 2.0
+pierce = 1
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(0.3, 1, 0.5, 1)
+polygon = PackedVector2Array(-8, -3, 8, 0, -8, 3)
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_proj")
