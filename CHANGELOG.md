@@ -6,6 +6,10 @@ The format is based on "Keep a Changelog" and uses semantic versioning.
 
 ## Unreleased
 
+## v0.1.3 - 2026-02-06
+
+- Fix CI: use dummy renderer to avoid GLES3 segfault on exit
+
 ## v0.1.2 - 2026-02-06
 
 - Fix CI export by forcing X11+opengl3
