@@ -6,6 +6,10 @@ The format is based on "Keep a Changelog" and uses semantic versioning.
 
 ## Unreleased
 
+## v0.1.6 - 2026-02-06
+
+- Fix CI: add contents:write permission for release creation
+
 ## v0.1.5 - 2026-02-06
 
 - Fix CI: prevent set -e from aborting on Godot cleanup crash
