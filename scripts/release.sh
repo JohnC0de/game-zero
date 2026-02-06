@@ -181,8 +181,8 @@ run_export() {
 	echo "[export] preset=$preset out=$out_path" >>"$log_file"
 
 	# shellcheck disable=SC2086
-	"$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1
-	local rc=$?
+	local rc=0
+	"$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1 || rc=$?
 
 	# Godot 4.6 may segfault during cleanup AFTER the pack is fully written
 	# (RID texture leak → signal 11). If the output file exists, the export
