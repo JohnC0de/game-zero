@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://src/resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "dmg_40"
+display_name = "Damage +40%"
+description = "Big damage boost"
+type = 2
+rarity = 2
+weight = 0.35
+max_stack = 4
+icon_color = Color(1.0, 0.9, 0.2, 1)
+stat = 0
+stat_op = 0
+stat_value = 1.4

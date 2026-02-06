@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://src/resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "hp_30"
+display_name = "Max HP +30"
+description = "Big health boost"
+type = 2
+rarity = 1
+weight = 0.55
+max_stack = 6
+icon_color = Color(0.3, 1.0, 0.5, 1)
+stat = 4
+stat_op = 1
+stat_value = 30.0

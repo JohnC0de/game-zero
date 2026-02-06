@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponDef" format=3]
+
+[ext_resource type="Script" path="res://src/resources/weapon_def.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/entities/weapons/missiles.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+weapon_name = "Missiles"
+weapon_scene = ExtResource("2")
+unlock_total_kills = 300

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3]
+
+[ext_resource type="Script" path="res://src/resources/upgrade_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "dr_08"
+display_name = "Damage Taken -8%"
+description = "Reduce incoming damage"
+type = 2
+rarity = 2
+weight = 0.3
+max_stack = 6
+icon_color = Color(1.0, 0.9, 0.2, 1)
+stat = 5
+stat_op = 0
+stat_value = 0.92

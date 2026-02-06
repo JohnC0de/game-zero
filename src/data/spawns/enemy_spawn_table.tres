@@ -1,0 +1,85 @@
+[gd_resource type="Resource" script_class="EnemySpawnTable" format=3]
+
+[ext_resource type="Script" path="res://src/systems/balance/enemy_spawn_table.gd" id="1"]
+[ext_resource type="Script" path="res://src/systems/balance/enemy_spawn_phase.gd" id="2"]
+[ext_resource type="Script" path="res://src/systems/balance/enemy_spawn_entry.gd" id="3"]
+[ext_resource type="PackedScene" path="res://src/entities/enemies/chaser.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://src/entities/enemies/drifter.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://src/entities/enemies/splitter.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://src/entities/enemies/tank.tscn" id="7"]
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_early_chaser"]
+script = ExtResource("3")
+enemy_scene = ExtResource("4")
+weight = 0.8
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_early_drifter"]
+script = ExtResource("3")
+enemy_scene = ExtResource("5")
+weight = 0.2
+
+[sub_resource type="Resource" script_class="EnemySpawnPhase" id="EnemySpawnPhase_early"]
+script = ExtResource("2")
+start_time = 0.0
+end_time = 60.0
+entries = [SubResource("EnemySpawnEntry_early_chaser"), SubResource("EnemySpawnEntry_early_drifter")]
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_mid_chaser"]
+script = ExtResource("3")
+enemy_scene = ExtResource("4")
+weight = 0.5
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_mid_drifter"]
+script = ExtResource("3")
+enemy_scene = ExtResource("5")
+weight = 0.25
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_mid_splitter"]
+script = ExtResource("3")
+enemy_scene = ExtResource("6")
+weight = 0.25
+
+[sub_resource type="Resource" script_class="EnemySpawnPhase" id="EnemySpawnPhase_mid"]
+script = ExtResource("2")
+start_time = 60.0
+end_time = 180.0
+entries = [
+	SubResource("EnemySpawnEntry_mid_chaser"),
+	SubResource("EnemySpawnEntry_mid_drifter"),
+	SubResource("EnemySpawnEntry_mid_splitter")
+]
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_late_chaser"]
+script = ExtResource("3")
+enemy_scene = ExtResource("4")
+weight = 0.35
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_late_drifter"]
+script = ExtResource("3")
+enemy_scene = ExtResource("5")
+weight = 0.2
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_late_splitter"]
+script = ExtResource("3")
+enemy_scene = ExtResource("6")
+weight = 0.2
+
+[sub_resource type="Resource" script_class="EnemySpawnEntry" id="EnemySpawnEntry_late_tank"]
+script = ExtResource("3")
+enemy_scene = ExtResource("7")
+weight = 0.25
+
+[sub_resource type="Resource" script_class="EnemySpawnPhase" id="EnemySpawnPhase_late"]
+script = ExtResource("2")
+start_time = 180.0
+end_time = -1.0
+entries = [
+	SubResource("EnemySpawnEntry_late_chaser"),
+	SubResource("EnemySpawnEntry_late_drifter"),
+	SubResource("EnemySpawnEntry_late_splitter"),
+	SubResource("EnemySpawnEntry_late_tank")
+]
+
+[resource]
+script = ExtResource("1")
+phases = [SubResource("EnemySpawnPhase_early"), SubResource("EnemySpawnPhase_mid"), SubResource("EnemySpawnPhase_late")]
