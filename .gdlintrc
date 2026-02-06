@@ -1,0 +1,8 @@
+disable:
+  - class-definitions-order
+  - no-else-return
+  - no-elif-return
+  - max-returns
+
+max-line-length: 120
+max-function-arguments: 10

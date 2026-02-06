@@ -1,0 +1,38 @@
+# Godot 4+ (caches/imported assets)
+.godot/
+.import/
+/android/
+
+# Build + release outputs (generated)
+/build/
+
+# dist is generated, but we commit dist/RELEASE_NOTES.md for GitHub Releases.
+/dist/
+!/dist/
+!/dist/RELEASE_NOTES.md
+
+/reports/
+
+# Godot (optional/C#)
+.mono/
+
+# Common editor/runtime artifacts
+*.log
+*.tmp
+*~
+*.swp
+
+# Python virtual environment (gdtoolkit)
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db

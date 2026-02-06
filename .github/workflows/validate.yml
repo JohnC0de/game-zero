@@ -1,0 +1,43 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip zip curl python3-venv
+
+      - name: Install Godot (headless)
+        run: |
+          GODOT_VERSION="4.6-stable"
+          GODOT_ZIP="Godot_v4.6-stable_linux.x86_64.zip"
+          GODOT_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/${GODOT_ZIP}"
+          curl -fL --retry 3 --retry-delay 2 -o "$GODOT_ZIP" "$GODOT_URL"
+          unzip -q "$GODOT_ZIP" -d godot-bin
+          mv godot-bin/Godot_v4.6-stable_linux.x86_64 godot-bin/godot
+          chmod +x godot-bin/godot
+          echo "$(pwd)/godot-bin" >> "$GITHUB_PATH"
+
+      - name: Install gdtoolkit (gdlint)
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install gdtoolkit
+
+      - name: Validate
+        env:
+          GODOT_BIN: godot
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/validate.sh
