@@ -24,6 +24,7 @@
 # Local LSP smoke tests (generated)
 src/_lsp_smoke_test.gd
 src/_lsp_smoke_test.gd.uid
+src/_tmp_lsp_diag_probe*
 
 # Python virtual environment (gdtoolkit)
 .venv/

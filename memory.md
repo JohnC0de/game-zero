@@ -219,6 +219,30 @@ gdscript/warnings/directory_rules={
 **Fix**: Add small static pools in the FX scripts and recycle nodes instead of freeing them  
 **Files affected**: `src/effects/damage_number.gd`, `src/effects/death_particles.gd`, `src/entities/enemies/enemy_base.gd`
 
+### Godot 4.6 Segfaults on Exit During Export (CI)
+**Date**: 2026-02-06  
+**Symptom**: CI export step fails with signal 11 (SIGSEGV) or 134 (SIGABRT) even though `[ DONE ] savepack` printed — the .pck was fully written  
+**Root Cause**: Godot 4.6 leaks RID allocations of type `TextureE` (both GLES3 and Dummy renderer). During cleanup after export, it crashes. This is an upstream Godot bug.  
+**Fix**: In `release.sh`, capture exit code with `|| rc=$?` to avoid `set -e` abort, then check if output file exists. If file exists, the export succeeded — ignore the crash.  
+**Files affected**: `scripts/release.sh`, `scripts/godot_xvfb.sh`
+
+```bash
+local rc=0
+"$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" || rc=$?
+if [ $rc -ne 0 ] && [ ! -f "$out_path" ]; then
+    exit 1  # real failure
+fi
+```
+
+**Also**: Remove `set -euo pipefail` from `godot_xvfb.sh` — it uses `exec` so bash options propagate signal-death unnecessarily.
+
+### GitHub Actions Needs `permissions: contents: write` for Releases
+**Date**: 2026-02-06  
+**Symptom**: "Resource not accessible by integration" when `softprops/action-gh-release` tries to create a release  
+**Root Cause**: Default `GITHUB_TOKEN` has read-only contents permission  
+**Fix**: Add `permissions: contents: write` at workflow top level  
+**Files affected**: `.github/workflows/release.yml`
+
 ### Avoid Hard-Coded Base Stats
 **Date**: 2026-02-06  
 **Symptom**: Base HP/weapon scaling constants drift across scripts/scenes  

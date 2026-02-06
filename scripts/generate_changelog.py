@@ -160,7 +160,7 @@ def build_section(version: str, base_ref: str | None) -> Section:
     if not bullets:
         bullets = ["No notable changes."]
 
-    date_utc = dt.datetime.utcnow().strftime("%Y-%m-%d")
+    date_utc = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     return Section(version=version, date_utc=date_utc, bullets=bullets)
 
 

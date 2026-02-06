@@ -4,13 +4,13 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 VENV_DIR="$PROJECT_DIR/.venv"
+GODOT_BIN="${GODOT_BIN:-godot}"
 
 echo "=== Validating Godot Project ==="
 
 # Step 1: Compilation check using editor mode (doesn't run the game)
 echo "[1/3] Checking compilation..."
-COMPILE_OUTPUT=$(godot --headless --path "$PROJECT_DIR" --editor --quit 2>&1 || true)
-# Look for actual script/parse errors, not socket warnings
+COMPILE_OUTPUT=$("$GODOT_BIN" --headless --path "$PROJECT_DIR" --editor --quit 2>&1 || true)
 if echo "$COMPILE_OUTPUT" | grep -qiE "SCRIPT ERROR|Parse Error|Compile Error|Failed to load script"; then
 	echo "$COMPILE_OUTPUT" | grep -iE "SCRIPT ERROR|Parse Error|Compile Error|Failed to load|warning treated"
 	echo "❌ Compilation errors found!"
@@ -34,21 +34,19 @@ fi
 # Step 3: Unit tests (gdUnit4) with timeout
 echo "[3/3] Running unit tests..."
 
-TEST_OUTPUT=$(timeout 60 godot --headless --path "$PROJECT_DIR" -s addons/gdUnit4/bin/GdUnitCmdTool.gd \
-	-a test/unit --ignoreHeadlessMode 2>&1 || true)
-TEST_EXIT=$?
+TEST_EXIT=0
+TEST_OUTPUT=$(timeout 60 "$GODOT_BIN" --headless --path "$PROJECT_DIR" -s addons/gdUnit4/bin/GdUnitCmdTool.gd \
+	-a test/unit --ignoreHeadlessMode 2>&1) || TEST_EXIT=$?
 
 echo "$TEST_OUTPUT"
 
-# Check for test failures in output
-if echo "$TEST_OUTPUT" | grep -qE "FAILED|errors: [1-9]|failures: [1-9]"; then
-	echo "❌ Tests failed!"
+if [ $TEST_EXIT -eq 124 ]; then
+	echo "❌ Tests timed out!"
 	exit 1
 fi
 
-# Check for timeout
-if [ $TEST_EXIT -eq 124 ]; then
-	echo "❌ Tests timed out!"
+if echo "$TEST_OUTPUT" | grep -qE "FAILED|errors: [1-9]|failures: [1-9]"; then
+	echo "❌ Tests failed!"
 	exit 1
 fi
 
