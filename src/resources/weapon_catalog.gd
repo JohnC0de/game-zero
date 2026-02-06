@@ -48,8 +48,12 @@ static func _ensure_loaded() -> void:
 	dir.list_dir_begin()
 	var file_name: String = dir.get_next()
 	while file_name != "":
-		if not dir.current_is_dir() and file_name.ends_with(".tres"):
-			var res_path: String = "%s/%s" % [_WEAPONS_DIR, file_name]
+		var normalized: String = file_name
+		if normalized.ends_with(".remap"):
+			normalized = normalized.trim_suffix(".remap")
+
+		if not dir.current_is_dir() and normalized.ends_with(".tres"):
+			var res_path: String = "%s/%s" % [_WEAPONS_DIR, normalized]
 			var res: Resource = load(res_path)
 			var w: WeaponDef = res as WeaponDef
 			if w and w.weapon_name != "" and w.weapon_scene:
