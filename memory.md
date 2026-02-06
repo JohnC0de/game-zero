@@ -158,6 +158,22 @@ var value: int = d.get("key", 0) as int
 
 ## Godot Gotchas
 
+### Exported Builds Can List Resources As `.remap`
+**Date**: 2026-02-06  
+**Symptom**: Windows exported build runs, but player doesn't auto-shoot / upgrades don't appear (weapons/upgrades catalogs load empty)
+**Root Cause**: In exported projects, `DirAccess` may return filenames like `*.tres.remap` when scanning `res://` folders. Code that only accepts `ends_with(".tres")` skips these entries.
+**Fix**: Normalize directory entries by stripping the `.remap` suffix before checking extensions and loading resources.
+**Files affected**: `src/resources/weapon_catalog.gd`, `src/systems/upgrades/upgrade_catalog.gd`
+
+```gdscript
+var normalized: String = file_name
+if normalized.ends_with(".remap"):
+    normalized = normalized.trim_suffix(".remap")
+
+if normalized.ends_with(".tres"):
+    var res: Resource = load("%s/%s" % [dir_path, normalized])
+```
+
 ### Godot Caches Scripts - Clear After External Edits
 **Date**: 2026-02-05  
 **Symptom**: Editor crashes with script errors even though file is correct  
