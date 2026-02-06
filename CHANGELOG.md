@@ -6,6 +6,10 @@ The format is based on "Keep a Changelog" and uses semantic versioning.
 
 ## Unreleased
 
+## v0.1.1 - 2026-02-06
+
+- Fix CI export crash by running Godot under Xvfb
+
 ## v0.1.0 - 2026-02-06
 
 - Document src module conventions
