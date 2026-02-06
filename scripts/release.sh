@@ -181,11 +181,21 @@ run_export() {
 	echo "[export] preset=$preset out=$out_path" >>"$log_file"
 
 	# shellcheck disable=SC2086
-	if ! "$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1; then
-		echo "❌ Export failed for preset '$preset'" >&2
+	"$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1
+	local rc=$?
+
+	# Godot 4.6 may segfault during cleanup AFTER the pack is fully written
+	# (RID texture leak → signal 11). If the output file exists, the export
+	# succeeded; ignore the spurious crash.
+	if [ $rc -ne 0 ] && [ ! -f "$out_path" ]; then
+		echo "❌ Export failed for preset '$preset' (exit code $rc)" >&2
 		echo "--- Last 80 log lines ($log_file) ---" >&2
 		tail -n 80 "$log_file" >&2 || true
 		exit 1
+	fi
+
+	if [ $rc -ne 0 ]; then
+		echo "⚠️  Godot exited with code $rc but output exists — ignoring cleanup crash"
 	fi
 }
 
