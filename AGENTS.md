@@ -56,9 +56,18 @@ When assisting with shipping/release work, ALWAYS ensure:
 ./scripts/release_version.sh minor
 ./scripts/release_version.sh major
 
+# Or set an explicit version
+./scripts/release_version.sh v1.2.3
+
 # Push automatically (commit + tag), triggering CI publish
 PUSH=1 ./scripts/release_version.sh patch
 ```
+
+Notes:
+
+- `scripts/release_version.sh` requires a clean git working tree.
+- `scripts/release.sh` respects `GODOT_BIN` (defaults to `godot`) and `GODOT_EXPORT_FLAGS` (defaults to `--headless`).
+- CI runs `./scripts/release.sh` with `GODOT_BIN=./scripts/godot_xvfb.sh` and a dummy renderer for stability (see `.github/workflows/release.yml`).
 
 ### Changelog Automation
 
@@ -75,6 +84,10 @@ PUSH=1 ./scripts/release_version.sh patch
 
 - CI extracts the current version notes into `dist/RELEASE_NOTES.md` using `scripts/extract_release_notes.py`.
 - `.github/workflows/release.yml` publishes a GitHub Release on tag push (`v*`) and uses `body_path: dist/RELEASE_NOTES.md`.
+
+Tip:
+
+- `scripts/release_version.sh` also writes `dist/RELEASE_NOTES.md` and commits it, so the exact notes used by CI are reviewable.
 
 ### In-Game Updates (GitHub Only)
 
@@ -101,10 +114,17 @@ Release asset requirements (must be attached to the GitHub Release):
 - `*_windows_x86_64.zip`
 - `*_linux_x86_64.AppImage` (preferred) or fallback `*_linux_x86_64.zip`
 
+Asset selection rules:
+
+- `UpdateManager` selects assets by filename suffix (not by exact project name).
+- Linux prefers `*_linux_x86_64.AppImage` when present.
+
 Notes:
 
 - `scripts/release.sh` temporarily sets `config/version` during export to match the build id (tag/sha) and restores `project.godot` afterwards.
 - Updates can fail if the install directory is not writable (Windows Program Files, locked folders).
+- Version comparison is semantic-ish: `v` prefix is ignored and any `-suffix` (e.g. `-rc.1`) is ignored; only the first 3 numeric components are compared.
+- More detail: `docs/updates.md`.
 
 ## Memory: Learn From Past Mistakes (MANDATORY)
 
