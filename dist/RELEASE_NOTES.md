@@ -1,3 +1,3 @@
-## v0.1.6 - 2026-02-06
+## v0.1.7 - 2026-02-06
 
-- Fix CI: add contents:write permission for release creation
+- Improve CI: add caching, align runners, fix validate.sh, misc cleanup
