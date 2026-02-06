@@ -7,8 +7,7 @@
 /build/
 
 # dist is generated, but we commit dist/RELEASE_NOTES.md for GitHub Releases.
-/dist/
-!/dist/
+/dist/*
 !/dist/RELEASE_NOTES.md
 
 /reports/
