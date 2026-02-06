@@ -1,0 +1,101 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Neon Survivor"
+config/version="v0.1.0"
+run/main_scene="res://src/ui/main_menu.tscn"
+config/features=PackedStringArray("4.6", "Forward Plus")
+config/icon="res://icon.svg"
+config/update_owner="JohnC0de"
+config/update_repo="game-zero"
+
+[autoload]
+
+Log="*res://src/autoloads/logger.gd"
+Events="*res://src/autoloads/events.gd"
+Game="*res://src/autoloads/game.gd"
+Balance="*res://src/autoloads/balance.gd"
+Stats="*res://src/autoloads/stats.gd"
+Metrics="*res://src/autoloads/metrics.gd"
+ScreenFX="*res://src/autoloads/screen_fx.gd"
+SaveData="*res://src/autoloads/save_data.gd"
+Settings="*res://src/autoloads/settings.gd"
+UpdateManager="*res://src/autoloads/update_manager.gd"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
+file_logging/enable_file_logging=true
+gdscript/warnings/directory_rules={
+"res://addons/": 0,
+"res://addons/gdUnit4": 0,
+"res://test/": 0
+}
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/unsafe_cast=1
+gdscript/warnings/unsafe_call_argument=1
+gdscript/warnings/return_value_discarded=1
+gdscript/warnings/treat_warnings_as_errors=true
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
+[input]
+
+move_up={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"location":0,"echo":false,"script":null)
+]
+}
+move_down={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null)
+]
+}
+move_left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null)
+]
+}
+move_right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="enemy"
+2d_physics/layer_3="player_projectile"
+2d_physics/layer_4="enemy_projectile"
+2d_physics/layer_5="pickup"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0.02, 0.02, 0.05, 1)

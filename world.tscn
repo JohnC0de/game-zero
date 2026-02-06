@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://dw6rcs6ps5yf1"]
+
+[ext_resource type="PackedScene" uid="uid://bqnwvkdpyxhqf" path="res://src/entities/player/player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://src/systems/game_arena.gd" id="2_arena"]
+[ext_resource type="Environment" path="res://src/effects/neon_environment.tres" id="3_env"]
+[ext_resource type="Shader" path="res://src/effects/grid_background.gdshader" id="4_grid_shader"]
+[ext_resource type="Script" path="res://src/effects/grid_background.gd" id="5_grid_script"]
+[ext_resource type="Script" path="res://src/systems/wave_spawner.gd" id="6_spawner"]
+[ext_resource type="Script" path="res://src/systems/upgrade_manager.gd" id="7_upgrades"]
+[ext_resource type="PackedScene" uid="uid://hud_001" path="res://src/ui/hud.tscn" id="8_hud"]
+[ext_resource type="PackedScene" uid="uid://levelup_ui_001" path="res://src/ui/level_up_ui.tscn" id="9_levelup"]
+[ext_resource type="PackedScene" uid="uid://game_over_001" path="res://src/ui/game_over.tscn" id="10_gameover"]
+[ext_resource type="PackedScene" uid="uid://pause_menu_001" path="res://src/ui/pause_menu.tscn" id="12_pause"]
+[ext_resource type="Script" path="res://src/effects/player_trail.gd" id="11_trail"]
+[ext_resource type="PackedScene" path="res://src/effects/fog_overlay.tscn" id="13_fog"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grid"]
+shader = ExtResource("4_grid_shader")
+shader_parameter/line_color = Color(0.1, 0.3, 0.5, 0.4)
+shader_parameter/bg_color = Color(0.02, 0.02, 0.05, 1)
+shader_parameter/grid_size = 50.0
+shader_parameter/line_width = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[node name="World" type="Node2D"]
+script = ExtResource("2_arena")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_env")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="GridBackground" type="ColorRect" parent="BackgroundLayer"]
+material = SubResource("ShaderMaterial_grid")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_grid_script")
+
+[node name="PlayerTrail" type="Line2D" parent="."]
+script = ExtResource("11_trail")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(960, 540)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="WaveSpawner" type="Node" parent="."]
+script = ExtResource("6_spawner")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("7_upgrades")
+
+[node name="FogOverlay" parent="." instance=ExtResource("13_fog")]
+
+[node name="HUD" parent="." instance=ExtResource("8_hud")]
+
+[node name="LevelUpUI" parent="." instance=ExtResource("9_levelup")]
+
+[node name="GameOverUI" parent="." instance=ExtResource("10_gameover")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("12_pause")]
