@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/effects/fog_overlay.gd" id="1_fog_script"]
+[ext_resource type="Shader" path="res://src/effects/fog_overlay.gdshader" id="2_fog_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fog"]
+shader = ExtResource("2_fog_shader")
+
+[node name="FogOverlay" type="CanvasLayer"]
+layer = 1
+script = ExtResource("1_fog_script")
+
+[node name="FogRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_fog")
+mouse_filter = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
