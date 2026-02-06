@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
       - name: Build releases
         env:
           GODOT_BIN: ./scripts/godot_xvfb.sh
-          GODOT_EXPORT_FLAGS: "--display-driver x11 --rendering-driver opengl3 --audio-driver Dummy"
+          GODOT_EXPORT_FLAGS: "--display-driver x11 --rendering-driver dummy --audio-driver Dummy"
         run: |
           chmod +x scripts/*.sh
           ./scripts/release.sh
