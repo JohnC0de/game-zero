@@ -6,6 +6,10 @@ The format is based on "Keep a Changelog" and uses semantic versioning.
 
 ## Unreleased
 
+## v0.1.8 - 2026-02-06
+
+- No notable changes.
+
 ## v0.1.7 - 2026-02-06
 
 - Improve CI: add caching, align runners, fix validate.sh, misc cleanup
