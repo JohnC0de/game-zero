@@ -21,6 +21,10 @@
 *~
 *.swp
 
+# Local LSP smoke tests (generated)
+src/_lsp_smoke_test.gd
+src/_lsp_smoke_test.gd.uid
+
 # Python virtual environment (gdtoolkit)
 .venv/
 __pycache__/

@@ -32,6 +32,7 @@ jobs:
       - name: Build releases
         env:
           GODOT_BIN: ./scripts/godot_xvfb.sh
+          GODOT_EXPORT_FLAGS: "--display-driver x11 --rendering-driver opengl3 --audio-driver Dummy"
         run: |
           chmod +x scripts/*.sh
           ./scripts/release.sh

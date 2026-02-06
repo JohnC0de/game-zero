@@ -171,11 +171,17 @@ run_export() {
 	local preset="$1"
 	local out_path="$2"
 	local log_file="$3"
+	local export_flags
+
+	# Allow CI to override display/rendering settings for stability.
+	# Default remains headless so local automation works without a window server.
+	export_flags="${GODOT_EXPORT_FLAGS:---headless}"
 
 	echo "=== Exporting: $preset ==="
 	echo "[export] preset=$preset out=$out_path" >>"$log_file"
 
-	if ! "$GODOT_BIN" --headless --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1; then
+	# shellcheck disable=SC2086
+	if ! "$GODOT_BIN" $export_flags --path "$PROJECT_DIR" --export-release "$preset" "$out_path" >>"$log_file" 2>&1; then
 		echo "❌ Export failed for preset '$preset'" >&2
 		echo "--- Last 80 log lines ($log_file) ---" >&2
 		tail -n 80 "$log_file" >&2 || true
@@ -289,7 +295,10 @@ date_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 EOF
 
 	# Optional: release notes for GitHub Releases.
-	if command -v python3 >/dev/null 2>&1 && [[ -f "$PROJECT_DIR/CHANGELOG.md" ]]; then
+	# Only write RELEASE_NOTES.md for clean semver tags (e.g. v1.2.3).
+	# This file is committed by scripts/release_version.sh and should not be overwritten
+	# by ad-hoc local builds like "v0.1.0-dirty".
+	if [[ "$id" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && command -v python3 >/dev/null 2>&1 && [[ -f "$PROJECT_DIR/CHANGELOG.md" ]]; then
 		python3 "$SCRIPT_DIR/extract_release_notes.py" --version "$id" --out "$dist_dir/RELEASE_NOTES.md" || true
 	fi
 
