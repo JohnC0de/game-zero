@@ -1,3 +1,3 @@
-## v0.1.4 - 2026-02-06
+## v0.1.5 - 2026-02-06
 
-- Fix CI: tolerate Godot exit crash when export output exists
+- Fix CI: prevent set -e from aborting on Godot cleanup crash

@@ -6,6 +6,10 @@ The format is based on "Keep a Changelog" and uses semantic versioning.
 
 ## Unreleased
 
+## v0.1.5 - 2026-02-06
+
+- Fix CI: prevent set -e from aborting on Godot cleanup crash
+
 ## v0.1.4 - 2026-02-06
 
 - Fix CI: tolerate Godot exit crash when export output exists
